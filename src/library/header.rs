@@ -1,8 +1,9 @@
-use super::element::Element;
+use super::{element::Element, js_packet::JSPacket};
 
 pub struct Header {
     pub h_type: String,
     pub text: String,
+    pub js_event: Option<JSPacket>,
     pub style: Option<String>,
 }
 
@@ -12,6 +13,7 @@ impl Header {
         Header {
             h_type: h_type.to_string(),
             text: text.to_string(),
+            js_event: None,
             style: None,
         }
     }
@@ -30,6 +32,11 @@ impl Element for Header {
 
     fn style(&mut self, style: &str) -> &dyn Element {
         self.style = Some(style.to_string());
+        self
+    }
+
+    fn onclick(&mut self, js_event: JSPacket) -> &dyn Element {
+        self.js_event = Some(js_event);
         self
     }
 }

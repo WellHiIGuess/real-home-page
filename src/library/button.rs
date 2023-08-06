@@ -8,10 +8,10 @@ pub struct Button {
 
 impl Button {
     #[allow(unused)]
-    pub fn new(text: &str, js_event: Option<JSPacket>) -> Button {
+    pub fn new(text: &str) -> Button {
         Button {
             text: text.to_string(),
-            js_event,
+            js_event: None,
             style: None,
         }
     }
@@ -35,6 +35,11 @@ impl Element for Button {
 
     fn style(&mut self, style: &str) -> &dyn Element {
         self.style = Some(style.to_string());
+        self
+    }
+
+    fn onclick(&mut self, js_event: JSPacket) -> &dyn Element {
+        self.js_event = Some(js_event);
         self
     }
 }

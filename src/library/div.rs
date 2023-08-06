@@ -1,7 +1,8 @@
-use super::element::Element;
+use super::{element::Element, js_packet::JSPacket};
 
 pub struct Div<'a> {
     pub elements: Vec<Box<&'a dyn Element>>,
+    js_event: Option<JSPacket>,
     pub style: Option<String>,
 }
 
@@ -16,6 +17,7 @@ impl Div<'_> {
         
         Div {
             elements: b_elements,
+            js_event: None,
             style: None,
         }
     }
@@ -38,6 +40,11 @@ impl Element for Div<'_> {
 
     fn style(&mut self, style: &str) -> &dyn Element {
         self.style = Some(style.to_string());
+        self
+    }
+
+    fn onclick(&mut self, js_event: JSPacket) -> &dyn Element {
+        self.js_event = Some(js_event);
         self
     }
 }

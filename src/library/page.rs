@@ -1,5 +1,3 @@
-use actix_web::{get, Responder, HttpResponse};
-
 use super::element::Element;
 
 pub struct Page {
@@ -8,7 +6,7 @@ pub struct Page {
 }
 
 impl Page {
-    pub fn new(html: String, style_sheet_path: String) -> Self {
+    pub fn new(html: String) -> Self {
         Self {
             html,
         }
@@ -24,5 +22,5 @@ pub fn page(elements: Vec<&dyn Element>) -> Page {
         .map(|&m| m.get_html())
         .collect();
 
-    Page::new(output, String::default())
+    Page::new(output)
 }
