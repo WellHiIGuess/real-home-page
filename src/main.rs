@@ -13,6 +13,8 @@ async fn main() -> std::io::Result<()> {
         HttpResponse::Ok().body(home().serve())
     }
 
+    println!("Now serving at http://127.0.0.1:8080/");
+
     HttpServer::new(|| {
         App::new()
             .service(home_page)

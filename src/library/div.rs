@@ -7,18 +7,11 @@ pub struct Div<'a> {
 
 impl Div<'_> {
     #[allow(unused)]
-    pub fn new<'a>(elements: Vec<&'a dyn Element>, style: Option<&'a str>) -> Div<'a> {
+    pub fn new<'a>(elements: Vec<&'a dyn Element>) -> Div<'a> {
         let mut b_elements = vec![];
 
         for i in elements {
             b_elements.push(Box::new(i));
-        }
-
-        if style != None {
-            return Div {
-                elements: b_elements,
-                style: Some(style.unwrap().to_string())
-            };
         }
         
         Div {
@@ -41,5 +34,10 @@ impl Element for Div<'_> {
             .map(|x| x.get_html())
             .collect::<Vec<_>>()
             .join("").as_str() + "</div>"
+    }
+
+    fn style(&mut self, style: &str) -> &dyn Element {
+        self.style = Some(style.to_string());
+        self
     }
 }

@@ -6,14 +6,7 @@ pub struct Paragraph {
 }
 
 impl Paragraph {
-    pub fn new(text: &str, style: Option<&str>) -> Self {
-        if style != None {
-            return Self {
-                text: text.to_string(),
-                style: Some(style.unwrap().to_string()),
-            };
-        }
-        
+    pub fn new(text: &str) -> Self {
         Self {
             text: text.to_string(),
             style: None,
@@ -30,5 +23,10 @@ impl Element for Paragraph {
         }
 
         "<p".to_owned() + &style_imp + ">" + self.text.as_str() + "</p>"
+    }
+
+    fn style(&mut self, style: &str) -> &dyn Element {
+        self.style = Some(style.to_string());
+        self
     }
 }
