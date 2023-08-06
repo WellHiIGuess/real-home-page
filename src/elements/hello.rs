@@ -19,4 +19,8 @@ impl Element for Hello {
     fn onclick(&mut self, _: crate::library::js_packet::JSPacket) -> &dyn Element {
         self
     }
+
+    fn add_tag(&mut self, _: crate::library::tag::Tag) -> &dyn Element {
+        self
+    }
 }

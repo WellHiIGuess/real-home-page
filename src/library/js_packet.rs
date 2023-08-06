@@ -29,3 +29,9 @@ impl JSPacket {
         }
     }
 }
+
+impl ToString for JSPacket {
+    fn to_string(&self) -> String {
+        self.content.clone()
+    }
+}

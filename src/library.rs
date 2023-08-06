@@ -5,3 +5,4 @@ pub mod div;
 pub mod paragraph;
 pub mod button;
 pub mod js_packet;
+pub mod tag;

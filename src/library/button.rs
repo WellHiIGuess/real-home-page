@@ -1,9 +1,8 @@
-use super::{element::Element, js_packet::JSPacket};
+use super::{element::Element, js_packet::JSPacket, tag::Tag};
 
 pub struct Button {
     pub text: String,
-    pub js_event: Option<JSPacket>,
-    pub style: Option<String>,
+    pub tags: Vec<Tag>,
 }
 
 impl Button {
@@ -11,35 +10,34 @@ impl Button {
     pub fn new(text: &str) -> Button {
         Button {
             text: text.to_string(),
-            js_event: None,
-            style: None,
+            tags: vec![],
         }
     }
 }
 
 impl Element for Button {
     fn get_html(&self) -> String {
-        let mut style_imp = String::new();
-        let mut js_event_imp = &String::new();
+        let mut tag_impl= String::new();
 
-        if self.style != None {
-            style_imp = " style=\"".to_owned() + self.style.as_ref().unwrap().as_str() + "\" ";
+        for i in &self.tags {
+            tag_impl += format!(" {}=\"{}\" ", i.name, i.content).as_str();
         }
 
-        if self.js_event != None {
-            js_event_imp = &self.js_event.as_ref().unwrap().content;
-        }
-
-        "<button".to_owned() + &style_imp + " onclick=\"" + js_event_imp + "\">" + self.text.as_str() + "</button" + ">"
+        "<button".to_owned() + tag_impl.as_str() + ">" + self.text.as_str() + "</button" + ">"
     }
 
     fn style(&mut self, style: &str) -> &dyn Element {
-        self.style = Some(style.to_string());
+        self.tags.push(Tag::new("style", style.to_string()));
         self
     }
 
     fn onclick(&mut self, js_event: JSPacket) -> &dyn Element {
-        self.js_event = Some(js_event);
+        self.tags.push(Tag::new("onclick", js_event.to_string()));
+        self
+    }
+
+    fn add_tag(&mut self, tag: Tag) -> &dyn Element {
+        self.tags.push(tag);
         self
     }
 }
