@@ -10,7 +10,7 @@ use actix_web::{get, App, HttpResponse, HttpServer, Responder};
 async fn main() -> std::io::Result<()> {
     #[get("/")]
     async fn home_page() -> impl Responder {
-        HttpResponse::Ok().body(home())
+        HttpResponse::Ok().body(home().serve())
     }
 
     HttpServer::new(|| {
