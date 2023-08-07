@@ -6,21 +6,17 @@ pub struct Hello {
 impl Element for Hello {
     fn get_html(&self) -> String {
         Div::new(vec![
-            Paragraph::new("Hello").style("color: red;"),
+            &Paragraph::new("Hello"),
             Button::new("Click me")
-                .onclick(JSPacket::new("test.js")),
+                .add_action_tag("onclikc", JSPacket::new("test.js"))
         ]).get_html()
     }
 
-    fn style(&mut self, _: &str) -> &dyn Element {
-        self
-    }
-
-    fn onclick(&mut self, _: crate::library::js_packet::JSPacket) -> &dyn Element {
-        self
-    }
-
     fn add_tag(&mut self, _: crate::library::tag::Tag) -> &dyn Element {
+        self
+    }
+
+    fn add_action_tag(&mut self, _: &str, _: JSPacket) -> &dyn Element {
         self
     }
 }

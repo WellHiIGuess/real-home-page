@@ -1,6 +1,7 @@
 #[derive(PartialEq)]
 pub struct JSPacket {
     pub content: String,
+    pub path: String,
 }
 
 impl JSPacket {
@@ -26,6 +27,7 @@ impl JSPacket {
         
         JSPacket {
             content: s,
+            path: file_path.to_string(),
         }
     }
 }

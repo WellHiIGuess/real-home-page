@@ -2,8 +2,8 @@ mod app;
 mod library;
 mod elements;
 
-use crate::app::home::home;
-use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+use crate::{app::home::home, library::js_packet::JSPacket};
+use actix_web::{get, App, HttpResponse, HttpServer, Responder, web};
 
 
 #[actix_web::main]
@@ -13,11 +13,17 @@ async fn main() -> std::io::Result<()> {
         HttpResponse::Ok().body(home().serve())
     }
 
+    #[get("/$get_js/{file}")]
+    async fn get_js(file: web::Path<String>) -> impl Responder {
+        HttpResponse::Ok().body(JSPacket::new(&file).to_string())
+    }
+
     println!("Now serving at http://127.0.0.1:8080/");
 
     HttpServer::new(|| {
         App::new()
             .service(home_page)
+            .service(get_js)
     })
     .bind(("127.0.0.1", 8080))?
     .run()
