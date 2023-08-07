@@ -20,7 +20,7 @@ impl Element for Button {
         let mut tag_impl= String::new();
 
         for i in &self.tags {
-            tag_impl += format!(" {}=\"{}\" ", i.name, i.content).as_str();
+            tag_impl += format!(" {}=\"{}\" ", i.name, i.content.replace("\"", "'")).as_str();
         }
 
         "<button".to_owned() + tag_impl.as_str() + ">" + self.text.as_str() + "</button" + ">"
@@ -32,7 +32,9 @@ impl Element for Button {
     }
 
     fn onclick(&mut self, js_event: JSPacket) -> &dyn Element {
-        self.tags.push(Tag::new("onclick", js_event.to_string()));
+        // self.tags.push(Tag::new("onclick", js_event.to_string()));
+        // This is test code
+        self.tags.push(Tag::new("onclick", ("console.log('getting stuff');async function get() {const response = await fetch('../$get_js/".to_owned() + &js_event.path + "').then(response => response.text()).then(data=>eval(data));}get();").to_string()));
         self
     }
 

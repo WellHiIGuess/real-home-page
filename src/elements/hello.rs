@@ -6,7 +6,7 @@ pub struct Hello {
 impl Element for Hello {
     fn get_html(&self) -> String {
         Div::new(vec![
-            Paragraph::new("Hello").style("color: red;"),
+            &Paragraph::new("Hello"),
             Button::new("Click me")
                 .onclick(JSPacket::new("test.js")),
         ]).get_html()
